@@ -1,4 +1,5 @@
 from stack import Stack
+import math
 
 def is_paren_balanced(input_string):
     stack = Stack()
@@ -26,3 +27,13 @@ def reverse_string(input):
     while not stack.is_empty():
         reversed += stack.pop()
     return reversed
+
+def convert_int_to_bin(dec_num):
+
+    binary = ""
+    while dec_num > 0:
+      remainder = dec_num % 2
+      binary += str(int(remainder))
+      dec_num = math.floor(dec_num/2)
+
+    return binary[::-1]

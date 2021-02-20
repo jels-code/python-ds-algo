@@ -1,5 +1,5 @@
 import unittest
-from valid_paren import *
+from valid_paren import is_paren_balanced, reverse_string, convert_int_to_bin
 from stack import Stack
 
 
@@ -33,6 +33,10 @@ class TestStack(unittest.TestCase):
         self.assertEqual(reverse_string("hello"), "hello"[::-1])
         self.assertEqual(reverse_string("Hello World!"), "Hello World!"[::-1])
 
+    def test_convert_int_to_bin(self):
+        self.assertEqual(convert_int_to_bin(10), '1010')
+        self.assertEqual(convert_int_to_bin(188), '10111100')
+        self.assertEqual(convert_int_to_bin(4), '100')
 
 # runs directly without using unittest in command line
 if __name__ == '__main__':
