@@ -143,3 +143,26 @@ class LinkedList:
             self.head = curr_2
 
         curr_1.next, curr_2.next = curr_2.next, curr_1.next
+
+    def reverse(self):
+        prev = None
+        curr = self.head
+
+        while curr is not None:
+            curr_next = curr.next
+            curr.next = prev
+            prev = curr
+            curr = curr_next
+
+        self.head = prev
+
+    def reverse_recursive(self):
+        return self._reverse_recursive(self.head)
+
+    def _reverse_recursive(self, curr, prev=None):
+        if not curr:
+            return prev
+
+        curr_next = curr.next
+        curr.next = prev
+        return self._reverse_recursive(curr_next, curr)

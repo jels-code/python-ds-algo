@@ -85,6 +85,13 @@ class TestStack(unittest.TestCase):
         list.reverse()
         self.assertEqual(repr(list), 'E -> D -> C -> B -> A -> None')
 
+    def test_reverse_recursive(self):
+        list = LinkedList()
+        list.insert_from_list(['A', 'B', 'C', 'D', 'E'])
+
+        reversed = list.reverse_recursive()
+        list.head = reversed
+        self.assertEqual(repr(reversed), 'E -> D -> C -> B -> A -> None')
 
 
 # runs directly without using unittest in command line
