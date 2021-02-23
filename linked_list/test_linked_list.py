@@ -5,93 +5,114 @@ from linked_list import LinkedList, Node
 class TestStack(unittest.TestCase):
 
     def test_iter(self):
-        list = LinkedList()
-        list.insert_from_list(['A', 'A', 'A'])
+        llist = LinkedList()
+        llist.insert_from_list(['A', 'A', 'A'])
         count = 0
-        for node in list:
+        for node in llist:
             self.assertEqual(node.data, 'A')
             count += 1
         self.assertEqual(count, 3)
 
     def test_append(self):
-        list = LinkedList()
-        list.append('A')
-        list.append('B')
+        llist = LinkedList()
+        llist.append('A')
+        llist.append('B')
 
-        self.assertEqual(repr(list), 'A -> B -> None')
+        self.assertEqual(repr(llist), 'A -> B -> None')
 
     def test_prepend(self):
-        list = LinkedList()
-        list.append('B')
+        llist = LinkedList()
+        llist.append('B')
 
-        list.prepend('A')
-        self.assertEqual(repr(list), 'A -> B -> None')
+        llist.prepend('A')
+        self.assertEqual(repr(llist), 'A -> B -> None')
 
     def test_insert_after_node(self):
-        list = LinkedList()
-        list.insert_from_list(['A', 'C', 'D', 'E'])
+        llist = LinkedList()
+        llist.insert_from_list(['A', 'C', 'D', 'E'])
 
-        list.insert_after_node(list.head, 'B')
-        self.assertEqual(repr(list), 'A -> B -> C -> D -> E -> None')
+        llist.insert_after_node(llist.head, 'B')
+        self.assertEqual(repr(llist), 'A -> B -> C -> D -> E -> None')
 
     def test_delete_node(self):
-        list = LinkedList()
-        list.insert_from_list(['A', 'B'])
+        llist = LinkedList()
+        llist.insert_from_list(['A', 'B'])
 
-        self.assertRaises(ValueError, list.delete_node, 'non-existent-node')
+        self.assertRaises(ValueError, llist.delete_node, 'non-existent-node')
 
-        list.delete_node('B')
-        self.assertEqual(repr(list), 'A -> None')
+        llist.delete_node('B')
+        self.assertEqual(repr(llist), 'A -> None')
 
-        list.append('B2')
-        list.delete_node('A')
-        self.assertEqual(repr(list), 'B2 -> None')
+        llist.append('B2')
+        llist.delete_node('A')
+        self.assertEqual(repr(llist), 'B2 -> None')
 
-        list.delete_node('B2')
-        self.assertEqual(repr(list), 'None')
+        llist.delete_node('B2')
+        self.assertEqual(repr(llist), 'None')
 
-        self.assertRaises(TypeError, list.delete_node, 'non-existent-node')
+        self.assertRaises(TypeError, llist.delete_node, 'non-existent-node')
 
     def test_delete_node_at_pos(self):
-        list = LinkedList()
-        list.insert_from_list([0, 1, 2, 3])
-        list.delete_node_at_pos(2)
+        llist = LinkedList()
+        llist.insert_from_list([0, 1, 2, 3])
+        llist.delete_node_at_pos(2)
 
-        self.assertEqual(repr(list), '0 -> 1 -> 3 -> None')
+        self.assertEqual(repr(llist), '0 -> 1 -> 3 -> None')
 
-        self.assertRaises(IndexError, list.delete_node_at_pos, 3)
-        self.assertRaises(IndexError, list.delete_node_at_pos, -2)
-        self.assertRaises(IndexError, list.delete_node_at_pos, 10)
+        self.assertRaises(IndexError, llist.delete_node_at_pos, 3)
+        self.assertRaises(IndexError, llist.delete_node_at_pos, -2)
+        self.assertRaises(IndexError, llist.delete_node_at_pos, 10)
 
     def test_len(self):
-        list = LinkedList()
-        list.insert_from_list([0, 1, 2, 3, 4])
+        llist = LinkedList()
+        llist.insert_from_list([0, 1, 2, 3, 4])
 
-        self.assertEqual(list.len(), 5)
+        self.assertEqual(llist.len(), 5)
 
     def test_len_zero(self):
-        list = LinkedList()
-        self.assertEqual(list.len(), 0)
+        llist = LinkedList()
+        self.assertEqual(llist.len(), 0)
 
     def test_swap(self):
-        list = LinkedList()
-        list.insert_from_list(['A', 'B', 'C', 'D', 'E'])
-        list.swap('B', 'D')
-        self.assertEqual(repr(list), 'A -> D -> C -> B -> E -> None')
+        llist = LinkedList()
+        llist.insert_from_list(['A', 'B', 'C', 'D', 'E'])
+        llist.swap('B', 'D')
+        self.assertEqual(repr(llist), 'A -> D -> C -> B -> E -> None')
 
     def test_reverse(self):
-        list = LinkedList()
-        list.insert_from_list(['A', 'B', 'C', 'D', 'E'])
-        list.reverse()
-        self.assertEqual(repr(list), 'E -> D -> C -> B -> A -> None')
+        llist = LinkedList()
+        llist.insert_from_list(['A', 'B', 'C', 'D', 'E'])
+        llist.reverse()
+        self.assertEqual(repr(llist), 'E -> D -> C -> B -> A -> None')
 
     def test_reverse_recursive(self):
-        list = LinkedList()
-        list.insert_from_list(['A', 'B', 'C', 'D', 'E'])
+        llist = LinkedList()
+        llist.insert_from_list(['A', 'B', 'C', 'D', 'E'])
 
-        reversed = list.reverse_recursive()
-        list.head = reversed
-        self.assertEqual(repr(reversed), 'E -> D -> C -> B -> A -> None')
+        llist.reverse_recursive()
+        self.assertEqual(repr(llist), 'E -> D -> C -> B -> A -> None')
+
+    def test_merge_sorted_lists(self):
+        llist = LinkedList()
+        llist.insert_from_list([1, 3, 4])
+        otherllist = LinkedList()
+        otherllist.insert_from_list([2, 4, 7, 8])
+
+        llist.merge_sorted_lists(otherllist)
+        self.assertEqual(repr(llist), '1 -> 2 -> 3 -> 4 -> 4 -> 7 -> 8 -> None')
+
+    def test_remove_duplicates(self):
+        llist = LinkedList()
+        llist.insert_from_list([1, 1, 5, 1, 3, 5])
+        llist.remove_duplicates()
+        self.assertEqual(repr(llist), '1 -> 5 -> 3 -> None')
+
+    def test_nth_last_node(self):
+        llist = LinkedList()
+        llist.insert_from_list(['A', 'B', 'C', 'D', 'E'])
+
+        self.assertEqual(llist.nth_to_last(4), 'B')
+
 
 
 # runs directly without using unittest in command line

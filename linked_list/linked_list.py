@@ -157,7 +157,7 @@ class LinkedList:
         self.head = prev
 
     def reverse_recursive(self):
-        return self._reverse_recursive(self.head)
+        self.head = self._reverse_recursive(self.head)
 
     def _reverse_recursive(self, curr, prev=None):
         if not curr:
@@ -166,3 +166,55 @@ class LinkedList:
         curr_next = curr.next
         curr.next = prev
         return self._reverse_recursive(curr_next, curr)
+
+    def merge_sorted_lists(self, llist):
+        """Some documentation"""
+        ptr1 = self.head
+        ptr2 = llist.head
+
+        dummy = prev_of_merged = Node(0)
+
+        while ptr1 is not None and ptr2 is not None:
+            if ptr1.data <= ptr2.data:
+                prev_of_merged.next = ptr1
+                ptr1 = ptr1.next
+            else:
+                prev_of_merged.next = ptr2
+                ptr2 = ptr2.next
+            prev_of_merged = prev_of_merged.next
+
+        prev_of_merged.next = ptr1 or ptr2
+
+        return dummy.next
+
+    def remove_duplicates(self):
+        dup = dict()
+        prev = None
+        curr = self.head
+
+        while curr:
+            if curr.data in dup:
+                prev.next = curr.next
+            else:
+                prev = curr
+                dup[curr.data] = 1
+            curr = curr.next
+
+    def nth_to_last(self, n):
+        end_ptr = self.head
+        if not end_ptr:
+            raise ValueError('list is empty')
+        count = 1
+
+        while end_ptr and count < n:
+            end_ptr = end_ptr.next
+            count += 1
+        if end_ptr is None:
+            raise ValueError(f'{n}th last node is outside length of list')
+
+        nth_node = self.head
+        while end_ptr.next is not None:
+            end_ptr = end_ptr.next
+            nth_node = nth_node.next
+
+        return nth_node.data
