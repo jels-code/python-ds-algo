@@ -99,7 +99,8 @@ class TestStack(unittest.TestCase):
         otherllist.insert_from_list([2, 4, 7, 8])
 
         llist.merge_sorted_lists(otherllist)
-        self.assertEqual(repr(llist), '1 -> 2 -> 3 -> 4 -> 4 -> 7 -> 8 -> None')
+        self.assertEqual(
+            repr(llist), '1 -> 2 -> 3 -> 4 -> 4 -> 7 -> 8 -> None')
 
     def test_remove_duplicates(self):
         llist = LinkedList()
@@ -113,6 +114,34 @@ class TestStack(unittest.TestCase):
 
         self.assertEqual(llist.nth_to_last(4), 'B')
 
+    def test_count_occurences(self):
+        llist = LinkedList()
+        llist.insert_from_list([1, 2, 5, 5, 1, 5])
+
+        self.assertEqual(llist.count_occurences(5), 3)
+        self.assertEqual(llist.count_occurences(10), 0)
+
+        self.assertEqual(llist.count_occurences_recursive(llist.head, 5), 3)
+        self.assertEqual(llist.count_occurences_recursive(llist.head, 10), 0)
+
+    def test_rotate(self):
+        llist = LinkedList()
+        llist.insert_from_list([1, 2, 3, 4, 5])
+        llist.rotate(3)
+
+        self.assertEqual(repr(llist), '4 -> 5 -> 1 -> 2 -> 3 -> None')
+
+        llist2 = LinkedList()
+        llist2.insert_from_list([1, 2, 3, 4, 5])
+        llist2.rotate(1)
+
+        self.assertEqual(repr(llist2), '2 -> 3 -> 4 -> 5 -> 1 -> None')
+
+        llist3 = LinkedList()
+        llist3.insert_from_list([1, 2, 3, 4, 5])
+        llist3.rotate(5)
+
+        self.assertEqual(repr(llist3), '1 -> 2 -> 3 -> 4 -> 5 -> None')
 
 
 # runs directly without using unittest in command line

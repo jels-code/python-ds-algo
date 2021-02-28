@@ -218,3 +218,39 @@ class LinkedList:
             nth_node = nth_node.next
 
         return nth_node.data
+
+    def count_occurences(self, data):
+        count = 0
+        for node in self:
+            if node.data == data:
+                count += 1
+        return count
+
+    def count_occurences_recursive(self, node, data):
+        if node is None:
+            return 0
+
+        if node.data == data:
+            return 1 + self.count_occurences_recursive(node.next, data)
+        return self.count_occurences_recursive(node.next, data)
+
+    def rotate(self, k):
+        node = self.head
+        head = self.head
+
+        for i in range(1, k):
+            if not node:
+                raise ValueError('invalid k for length of list')
+            node = node.next
+
+        pivot = node
+        if pivot.next is None:
+            return
+        self.head = pivot.next
+        node = pivot.next
+        pivot.next = None
+
+        while node.next is not None:
+            node = node.next
+        node.next = head
+        return
