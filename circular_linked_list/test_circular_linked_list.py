@@ -47,6 +47,28 @@ class TestStringMethods(unittest.TestCase):
         llist.remove(1)
         self.assertEqual(llist.to_list(), [])
 
+    def test_remove_non_existent_node(self):
+        llist = CircularLinkedList()
+        llist.from_list([1, 2, 3, 4, 5])
+        self.assertRaises(ValueError, llist.remove, 6)
+
+    def test_len(self):
+        llist = CircularLinkedList()
+        self.assertEqual(len(llist), 0)
+        llist.from_list([1, 2, 3])
+        self.assertEqual(len(llist), 3)
+        llist.append(9)
+        self.assertEqual(len(llist), 4)
+
+    # def test_split_list(self):
+    #     llist = CircularLinkedList()
+    #     llist.from_list([1, 2, 3, 4])
+    #     a = CircularLinkedList()
+    #     b = CircularLinkedList()
+    #     llist.split_list(a, b)
+    #     self.assertEqual(a.to_list, [1, 2])
+    #     self.assertEqual(b.to_list, [3, 4])
+
 
 if __name__ == '__main__':
     unittest.main()

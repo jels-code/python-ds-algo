@@ -1,3 +1,6 @@
+import math
+
+
 class Node:
     def __init__(self, data):
         self.data = data
@@ -23,6 +26,12 @@ class CircularLinkedList:
     def __repr__(self):
         list = self.to_list()
         return " -> ".join(list)
+
+    def __len__(self):
+        count = 0
+        for node in self:
+            count += 1
+        return count
 
     def to_list(self):
         list = []
@@ -98,3 +107,23 @@ class CircularLinkedList:
             node.next = node.next.next
         elif node.next == self.head:
             raise ValueError(f'{key} was not found in the list')
+
+    def split_list(self, a, b):
+        """ 
+        Returns 2 lists `a` and `b`, formed by splitting the original list from the middle 
+        If the list is uneven, `a` will have an extra node
+        """
+
+        node = self.head
+        for i in range(1, math.ceil(len(self)/2)):
+            node = node.next
+
+        b_head = node.next
+        node.next = self.head
+        a.head = self.head
+
+        node = b_head
+        while node.next != self.head:
+            node = node.next
+        node.next = b_head
+        b.head = b_head
